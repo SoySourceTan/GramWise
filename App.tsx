@@ -1,8 +1,7 @@
-
 import React, { useState, useCallback } from 'react';
-import { ItemCard } from './components/ItemCard';
-import { PlusIcon, RefreshIcon } from './components/icons';
-import type { Item } from './types';
+import { ItemCard } from './components/ItemCard.tsx';
+import { PlusIcon, RefreshIcon } from './components/icons.tsx';
+import type { Item } from './types.ts';
 
 const App: React.FC = () => {
   const createNewItem = (): Item => ({

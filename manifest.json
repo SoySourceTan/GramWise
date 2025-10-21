@@ -4,13 +4,26 @@
   "description": "複数の商品の価格と内容量を入力して、グラムあたりの単価が最も安い商品を簡単に見つけることができる計算・比較ツールです。",
   "icons": [
     {
-      "src": "/assets/icon.svg",
+      "src": "assets/icon.svg",
       "sizes": "any",
       "type": "image/svg+xml"
+    },
+    {
+      "src": "assets/icon-192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "assets/icon-512.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "any maskable"
     }
   ],
   "start_url": ".",
   "display": "standalone",
-  "theme_color": "#1f2937",
+  "display_override": ["standalone", "minimal-ui"],
+  "orientation": "portrait",
+  "theme_color": "#111827",
   "background_color": "#111827"
 }

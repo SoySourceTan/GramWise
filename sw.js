@@ -1,23 +1,19 @@
-const CACHE_NAME = 'unit-price-calculator-v1';
+const CACHE_NAME = 'unit-price-calculator-v2';
+// Caching only essential files for the app shell. JS/CSS is inlined.
 const urlsToCache = [
   './',
   'index.html',
-  'index.tsx',
-  'App.tsx',
-  'components/ItemCard.tsx',
-  'components/icons.tsx',
-  'types.ts',
+  'manifest.json',
   'assets/icon.svg',
-  'https://cdn.tailwindcss.com'
+  'assets/icon-192.png',
+  'assets/icon-512.png'
 ];
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then((cache) => {
-        console.log('Opened cache');
-        // addAllはアトミックな操作なので、一つでも失敗すると全体が失敗します。
-        // ネットワークエラーに備え、個別にキャッシュすることも検討できます。
+        console.log('Opened cache and caching app shell');
         const cachePromises = urlsToCache.map(urlToCache => {
             return cache.add(urlToCache).catch(err => {
                 console.warn(`Failed to cache ${urlToCache}:`, err);
@@ -29,15 +25,29 @@ self.addEventListener('install', (event) => {
 });
 
 self.addEventListener('fetch', (event) => {
+  // We only handle GET requests.
+  if (event.request.method !== 'GET') {
+    return;
+  }
+
   event.respondWith(
-    caches.match(event.request)
+    // Strategy: Network falling back to cache
+    // Try to fetch from the network first to get the latest version.
+    fetch(event.request)
       .then((response) => {
-        // キャッシュにあればそれを返す
-        if (response) {
-          return response;
-        }
-        // キャッシュになければネットワークからフェッチする
-        return fetch(event.request);
+        // If the fetch is successful, clone the response and cache it.
+        const responseToCache = response.clone();
+        caches.open(CACHE_NAME)
+          .then((cache) => {
+            cache.put(event.request, responseToCache);
+          });
+        return response;
+      })
+      .catch(() => {
+        // If the network fails, try to serve from the cache.
+        return caches.match(event.request).then(response => {
+            return response || caches.match('/');
+        });
       })
   );
 });
@@ -49,7 +59,7 @@ self.addEventListener('activate', (event) => {
       return Promise.all(
         cacheNames.map((cacheName) => {
           if (cacheWhitelist.indexOf(cacheName) === -1) {
-            // 新しいバージョンと異なる古いキャッシュを削除
+            // Delete old caches.
             return caches.delete(cacheName);
           }
         })

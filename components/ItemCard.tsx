@@ -1,6 +1,6 @@
 import React from 'react';
-import type { Item } from '../types';
-import { TrashIcon, CrownIcon } from './icons';
+import type { Item } from '../types.ts';
+import { TrashIcon, CrownIcon } from './icons.tsx';
 
 interface ItemCardProps {
   item: Item;
