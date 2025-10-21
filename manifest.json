@@ -1,0 +1,16 @@
+{
+  "short_name": "単価比較",
+  "name": "グラム単価 比較ツール",
+  "description": "複数の商品の価格と内容量を入力して、グラムあたりの単価が最も安い商品を簡単に見つけることができる計算・比較ツールです。",
+  "icons": [
+    {
+      "src": "/assets/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#1f2937",
+  "background_color": "#111827"
+}
