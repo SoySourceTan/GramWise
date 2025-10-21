@@ -1,13 +1,13 @@
 const CACHE_NAME = 'unit-price-calculator-v1';
 const urlsToCache = [
-  '/',
-  '/index.html',
-  '/index.tsx',
-  '/App.tsx',
-  '/components/ItemCard.tsx',
-  '/components/icons.tsx',
-  '/types.ts',
-  '/assets/icon.svg',
+  './',
+  'index.html',
+  'index.tsx',
+  'App.tsx',
+  'components/ItemCard.tsx',
+  'components/icons.tsx',
+  'types.ts',
+  'assets/icon.svg',
   'https://cdn.tailwindcss.com'
 ];
 
